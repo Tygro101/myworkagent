@@ -31,7 +31,7 @@ export class WorkTimeComponent implements OnInit {
   public start(go: boolean) {
     this.date = new Date(); // get date from storedge
     this.timeHolder = new TimeHolder(this.date);
-    this.date.setSeconds(0);
+
     setInterval(() => {
       this.Increment();
     }, 1000);
@@ -61,6 +61,7 @@ class TimeHolder {
         this.hours++;
       }
     }
-    return this.hours +":" + this.minutes +":" + this.seconds;
+    return moment(new Date(0,0,0,this.hours,this.minutes,this.seconds)).format("HH:mm:ss");
   }
+    
 }

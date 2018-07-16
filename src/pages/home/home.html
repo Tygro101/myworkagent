@@ -1,7 +1,15 @@
 <ion-content padding>
   <h2>Have a good day!</h2>
 
-  <work-time></work-time>
+  <div class="time-parent">
+    <work-time></work-time>
+  </div>
+  <div class="counters">
+    <sell-counter></sell-counter>
+    <sell-counter></sell-counter>
+    <sell-counter></sell-counter>
+  </div>
+  
   
   <button class="button start" ion-button (click)='toggleButtonName()' [ngStyle]="{'background': startButtonColor}">{{startButtonName}}</button>
   

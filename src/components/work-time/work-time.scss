@@ -1,3 +1,18 @@
-work-time {
-
+.time-circle {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  position: relative;
+  background: #0277bd;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+  .time {
+    color: antiquewhite;
+    font-weight: bold;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+  }
 }
