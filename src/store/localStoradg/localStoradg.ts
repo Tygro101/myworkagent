@@ -1,10 +1,13 @@
+import { AppState } from "../state";
 
-
-export const loadState =()=>{
+const emptyState:AppState = {
+    startWorkDate:''
+}
+export const loadState =():AppState=>{
     try{
         const serializedState = localStorage.getItem('state');
         if(serializedState === null){
-            return undefined;
+            return emptyState;
         }
         return JSON.parse(serializedState);
     }catch(err){

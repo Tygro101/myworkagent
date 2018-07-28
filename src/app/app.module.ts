@@ -14,6 +14,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DataLayerProvider } from '../providers/data-layer/data-layer';
 
+import { StoreModule } from '@ngrx/store';
+import { rootReducer } from '../store/reducers/reducers';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -25,6 +28,7 @@ import { DataLayerProvider } from '../providers/data-layer/data-layer';
   imports: [
     ComponentsModule,
     BrowserModule,
+    StoreModule.forRoot({rootReducer}),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

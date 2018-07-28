@@ -1,4 +1,4 @@
-export interface State{
-    startWorkDate:Date;  
+export interface AppState{
+    startWorkDate:string;  
 }
 

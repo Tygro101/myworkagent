@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Store } from '../../../node_modules/redux';
 
 /*
   Generated class for the DataLayerProvider provider.
@@ -9,7 +10,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DataLayerProvider {
 
-  constructor() {
+  constructor(private store:Store) {
+
   }
+
+  
   
 }
