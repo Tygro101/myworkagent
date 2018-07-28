@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Store } from '../../../node_modules/redux';
+import { Store } from '../../../node_modules/@ngrx/store';
+import { AppState } from '../../store/state';
+import { getDateSelectore } from '../../store/selectors/selectors';
+import { saveState } from '../../store/localStoradg/localStoradg';
+
 
 /*
   Generated class for the DataLayerProvider provider.
@@ -10,10 +14,9 @@ import { Store } from '../../../node_modules/redux';
 @Injectable()
 export class DataLayerProvider {
 
-  constructor(private store:Store) {
-
+  constructor(private store:Store<AppState>) {
+    store.select(getDateSelectore).subscribe((state:AppState)=>{
+      saveState(state);
+    })
   }
-
-  
-  
 }

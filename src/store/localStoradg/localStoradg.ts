@@ -15,7 +15,7 @@ export const loadState =():AppState=>{
     }
 }
 
-export const saveState = (state)=>{
+export const saveState = (state:AppState)=>{
     try{
         const serializedState = JSON.stringify(state);
         localStorage.setItem('state', serializedState);

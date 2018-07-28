@@ -28,7 +28,7 @@ import { rootReducer } from '../store/reducers/reducers';
   imports: [
     ComponentsModule,
     BrowserModule,
-    StoreModule.forRoot({rootReducer}),
+    StoreModule.forRoot({state:rootReducer}),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

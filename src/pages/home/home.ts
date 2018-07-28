@@ -5,6 +5,8 @@ import { Store } from '../../../node_modules/@ngrx/store';
 import { AppState } from '../../store/state';
 import * as Actions from '../../store/actions/actions';
 import { saveState } from '../../store/localStoradg/localStoradg';
+import { getDateSelectore, test } from '../../store/selectors/selectors';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -14,14 +16,15 @@ export class HomePage {
   private inWork:boolean;
   private startButtonName:string;
   private startButtonColor:string;
-  constructor(public navCtrl: NavController, private store:Store<AppState>) {
+  constructor(public navCtrl: NavController, private store:Store<test>) {
     this.inWork = false;
     this.startButtonName = "Start";
     this.startButtonColor = "#007ac1";
-    store.select((state:AppState)=>state).subscribe((state:AppState)=>{
-      saveState(state);
+    store.select(getDateSelectore).subscribe((state:string)=>{
+      console.log(state);
+      var date:Date = new Date(state);
     });
-    store.dispatch(new Actions.SetDateAction(new Date().toDateString()));
+    store.dispatch(new Actions.SetDateAction(new Date().toLocaleString()));
   
   }
 
@@ -32,3 +35,4 @@ export class HomePage {
     this.timeComponent.start(this.inWork);
   }
 }
+
