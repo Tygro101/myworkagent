@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 /**
  * Generated class for the SellCounterComponent component.
@@ -12,11 +12,9 @@ import { Component } from '@angular/core';
 })
 export class SellCounterComponent {
 
-  text: string;
+  @Input() count: number;
 
-  constructor() {
-    console.log('Hello SellCounterComponent Component');
-    this.text = 'Hello World';
+  public increment():void{
+    this.count++;
   }
-
 }

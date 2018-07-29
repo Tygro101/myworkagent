@@ -1,6 +1,7 @@
 import { AppState } from "../state";
 
 const emptyState:AppState = {
+    generalSettings:{start:false},
     startWorkDate:''
 }
 export const loadState =():AppState=>{

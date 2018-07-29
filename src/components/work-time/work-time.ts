@@ -1,5 +1,8 @@
 import { Component, OnInit, Output, Input, EventEmitter } from "@angular/core";
 import * as moment from 'moment';
+import { Store } from "../../../node_modules/@ngrx/store";
+import { getDateSelectore, getGeneralSettingsSelectore } from "../../store/selectors/selectors";
+import { CurrentState, GeneralSetting } from "../../store/state";
 
 
 /**
@@ -15,26 +18,26 @@ import * as moment from 'moment';
 export class WorkTimeComponent implements OnInit {
   private time: string;
   private timeHolder: TimeHolder;
-  private date:Date;
-  constructor() {
+  private handle:number;
+  constructor(private store:Store<CurrentState>) {
     this.time = "00:00:00";
-    
   }
 
   ngOnInit(): void {
-    this.HandleTime();
   }
 
-  private HandleTime(): void {
-  }
+  public start(go:boolean, date:Date) {
+    //this.date = new Date(date); // get date from storedge
+    
 
-  public start(go: boolean) {
-    this.date = new Date(); // get date from storedge
-    this.timeHolder = new TimeHolder(this.date);
-
-    setInterval(() => {
-      this.Increment();
-    }, 1000);
+    if(go){
+      this.timeHolder = new TimeHolder(date);
+      this.handle = setInterval(() => {
+        this.Increment();
+      }, 1000);
+    }else{
+      clearInterval(this.handle);
+    }
   }
 
   private Increment():void{
