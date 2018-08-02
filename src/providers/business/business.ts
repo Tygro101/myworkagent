@@ -48,7 +48,7 @@ export class Business {
         yearId:date.getFullYear()
       }));
     }
-    if(!days || !days.find(day => day.id == date.getDate())){
+    //if(!days || !days.find(day => day.id == date.getDate())){
       this.store.dispatch(new Actions.AddDayAction({
         date : date.toJSON(),
         id : date.getDate(),
@@ -56,10 +56,24 @@ export class Business {
         sellCount : 0,
         workTime : 0
       }));
+
+      this.store.dispatch(new Actions.StartAction({
+        startWorkDate:date.toJSON(),
+        start:true
+      }))
       return date;
-    }else{
-      return new Date(this.state.days.filter((day:DayWork)=>(day.monthId = date.getMonth()+1) && (day.id == date.getDate()))[0].date);
+    //}else{
+      //return new Date(this.state.days.filter((day:DayWork)=>(day.monthId = date.getMonth()+1) && (day.id == date.getDate()))[0].date);
+    }
+
+
+    endDayTime(date: Date) {
+      this.store.dispatch(new Actions.EndDayTime({
+        day:date.getDate(),
+        month:date.getMonth()+1,
+        duration:(Math.abs(new Date().valueOf() - date.valueOf()) / 36e5)
+      }))
     }
 
   }
-}
+

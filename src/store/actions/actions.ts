@@ -1,6 +1,6 @@
 
 import { Action } from '@ngrx/store';
-import { GeneralSetting, MonthWork, DayWork } from '../state';
+import { GeneralSetting, MonthWork, DayWork, EndDayId } from '../state';
 
 export const SET_START_DATE:string = "SET_START_DATE";
 export const START:string = "START";
@@ -9,6 +9,7 @@ export const RESET:string = "DEFAULT";
 export const ADD_YEAR:string = "ADD_YEAR";
 export const ADD_MONTH:string = "ADD_MONTH";
 export const ADD_DAY:string = "ADD_DAY";
+export const END_DAY:string = "END_DAY";
 
 export class SetDateAction implements Action{
     readonly type: string = SET_START_DATE;  
@@ -52,4 +53,11 @@ export class StartAction implements Action{
     }
 }
 
-export type All = SetDateAction | DefaultAction | AddDayAction | AddMonthAction;
+export class EndDayTime implements Action{
+    readonly type: string = END_DAY;
+    constructor(public payload:EndDayId){
+
+    }
+}
+
+export type All = SetDateAction | DefaultAction | AddDayAction | AddMonthAction | StartAction | EndDayTime;

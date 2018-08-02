@@ -1,6 +1,6 @@
 export interface AppState {
   generalSettings: GeneralSetting;
-  startWorkDate: string;
+
   years:Array<YearWork>;
   months:Array<MonthWork>;
   days:Array<DayWork>;
@@ -8,6 +8,7 @@ export interface AppState {
 
 export interface GeneralSetting {
   start: boolean;
+  startWorkDate: string;
 }
 
 export interface CurrentState {
@@ -34,3 +35,9 @@ export interface DayWork{
     date:string;
 }
 
+
+export interface EndDayId{
+  day:number;
+  month:number;
+  duration:number;
+}
