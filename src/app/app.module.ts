@@ -12,7 +12,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { DataLayerProvider } from '../providers/data-layer/data-layer';
+import { Business } from '../providers/business/business';
 
 import { StoreModule } from '@ngrx/store';
 import { rootReducer } from '../store/reducers/reducers';
@@ -43,7 +43,7 @@ import { rootReducer } from '../store/reducers/reducers';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataLayerProvider
+    Business
   ],
   exports:[
     WorkTimeComponent

@@ -2,8 +2,8 @@ export interface AppState {
   generalSettings: GeneralSetting;
   startWorkDate: string;
   years:Array<YearWork>;
-  month:Array<MonthWork>;
-  day:Array<DayWork>;
+  months:Array<MonthWork>;
+  days:Array<DayWork>;
 }
 
 export interface GeneralSetting {
@@ -27,8 +27,10 @@ export interface MonthWork{
 }
 
 export interface DayWork{
+    id:number;
     monthId:number;
     sellCount:number;
     workTime:number;
+    date:string;
 }
 

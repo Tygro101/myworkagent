@@ -1,15 +1,36 @@
 
 import { Action } from '@ngrx/store';
-import { GeneralSetting } from '../state';
+import { GeneralSetting, MonthWork, DayWork } from '../state';
 
 export const SET_START_DATE:string = "SET_START_DATE";
 export const START:string = "START";
 export const DEFAULT:string = "DEFAULT";
 export const RESET:string = "DEFAULT";
+export const ADD_YEAR:string = "ADD_YEAR";
+export const ADD_MONTH:string = "ADD_MONTH";
+export const ADD_DAY:string = "ADD_DAY";
 
 export class SetDateAction implements Action{
     readonly type: string = SET_START_DATE;  
     constructor(public payload:string){
+    }
+}
+
+//export class AddYearAction implements Action{
+//    readonly type: string = ADD_YEAR;  
+//    constructor(public payload:MonthWork){
+//    }
+//}
+
+export class AddMonthAction implements Action{
+    readonly type: string = ADD_MONTH;  
+    constructor(public payload:MonthWork){
+    }
+}
+
+export class AddDayAction implements Action{
+    readonly type: string = ADD_DAY;  
+    constructor(public payload:DayWork){
     }
 }
 
@@ -31,4 +52,4 @@ export class StartAction implements Action{
     }
 }
 
-export type All = SetDateAction | DefaultAction;
+export type All = SetDateAction | DefaultAction | AddDayAction | AddMonthAction;

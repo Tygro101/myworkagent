@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { WorkTimeComponent } from '../../components/work-time/work-time'
 import { Store } from '../../../node_modules/@ngrx/store';
@@ -6,23 +6,26 @@ import { AppState, CurrentState } from '../../store/state';
 import * as Actions from '../../store/actions/actions';
 import { saveState } from '../../store/localStoradg/localStoradg';
 import { getDateSelectore } from '../../store/selectors/selectors';
-import { DataLayerProvider } from '../../providers/data-layer/data-layer';
+import { Business } from '../../providers/business/business';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
-
+export class HomePage implements OnInit{
   @ViewChild(WorkTimeComponent) timeComponent: WorkTimeComponent;
   private inWork:boolean;
   private startButtonName:string;
   private startButtonColor:string;
   public  date:Date;
-  constructor(public navCtrl: NavController, private dataLayer:DataLayerProvider, private store:Store<CurrentState>) {
+  constructor(public navCtrl: NavController, private business:Business, private store:Store<CurrentState>) {
     this.inWork = false;
     this.startButtonName = "Start";
     this.startButtonColor = "#007ac1";  
+  }
+
+  ngOnInit(): void {
+    
   }
 
   toggleButtonName():void{
@@ -30,8 +33,8 @@ export class HomePage {
     this.manageButton();
 
     if(this.inWork){
-      this.date = new Date();//we should check here if we are in the same day.
-      this.store.dispatch(new Actions.SetDateAction(this.date.toJSON())); 
+      this.date = this.business.getDayTime(new Date());//we should check here if we are in the same day.
+      //this.store.dispatch(new Actions.SetDateAction(this.date.toJSON())); 
     }else{
       //store work time this day
     }
