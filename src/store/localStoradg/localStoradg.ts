@@ -1,5 +1,6 @@
 import { AppState } from "../state";
 
+
 const emptyState:AppState = {
     generalSettings:{
         start:false,
@@ -11,7 +12,7 @@ const emptyState:AppState = {
 }
 export const loadState =():AppState=>{
     try{
-        const serializedState = localStorage.getItem('state');
+        const serializedState = null;// localStorage.getItem('state');
         if(serializedState === null || serializedState === 'undefined'){
             return emptyState;
         }

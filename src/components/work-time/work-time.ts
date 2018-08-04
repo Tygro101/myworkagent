@@ -37,6 +37,7 @@ export class WorkTimeComponent implements OnInit {
       }, 1000);
     }else{
       clearInterval(this.handle);
+      this.time = "00:00:00";
     }
   }
 

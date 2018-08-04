@@ -1,6 +1,8 @@
 @import '../../theme/variables';
 
+
 page-home {
+    //background-image: url('../../assets/imgs//night.png') no-repeat center center fixed;
     text-align: center;
     .start{
         transition: all 1s ease;
@@ -12,4 +14,10 @@ page-home {
         text-align: center;
         display: flex;
     }
+}
+
+
+ion-content{
+    background: url('/assets/imgs//night.png') no-repeat center center fixed;
+    background-color: black;
 }
