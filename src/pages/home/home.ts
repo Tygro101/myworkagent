@@ -20,8 +20,7 @@ export class HomePage implements OnInit{
   public  date:Date;
   constructor(public navCtrl: NavController, private business:Business, private store:Store<CurrentState>, private state: State<AppState>) {
     this.inWork = false;
-    this.startButtonName = "Start";
-    this.startButtonColor = "#007ac1";  
+    this.startButtonName = "Start";  
   }
 
   ngOnInit(): void {
@@ -52,7 +51,6 @@ export class HomePage implements OnInit{
 
   manageButton(): any {
     this.startButtonName = !this.inWork?"Start":"Stop";
-    this.startButtonColor = this.inWork?"#c50e29":"#007ac1";
   }
 }
 

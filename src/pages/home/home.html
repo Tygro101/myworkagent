@@ -11,6 +11,6 @@
   </div>
   
   
-  <button class="button start" ion-button (click)='toggleButtonName()' [ngStyle]="{'background': startButtonColor}">{{startButtonName}}</button>
+  <button class="button" (click)='toggleButtonName()' [ngClass]="inWork?'stop':'start'" ion-button >{{startButtonName}}</button>
   <img *ngIf='false' src="../../assets/imgs/night.png" alt="">
 </ion-content>

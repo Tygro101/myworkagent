@@ -4,7 +4,7 @@
 page-home {
     //background-image: url('../../assets/imgs//night.png') no-repeat center center fixed;
     text-align: center;
-    .start{
+    .button{
         transition: all 1s ease;
         width: 70px;
         border-radius: 7px;
@@ -17,7 +17,15 @@ page-home {
 }
 
 
+.start{
+    background:#fdfdfd9f;
+    color: black;
+}
+
+.stop{
+    background:#c50e299f;
+}
+
 ion-content{
     background: url('/assets/imgs//night.png') no-repeat center center fixed;
-    background-color: black;
 }
