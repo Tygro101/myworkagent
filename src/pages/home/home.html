@@ -1,16 +1,22 @@
 <ion-content padding>
-  <h2>Have a good day!</h2>
+  <div class="home-wrapper">
+    <h2>Have a good day!</h2>
 
-  <div class="time-parent">
-    <work-time></work-time>
+    <div class="time-parent">
+      <work-time></work-time>
+    </div>
+
+
+
+    <div class="counters">
+      <div *ngFor="let counter of counters">
+        <sell-counter [type]='counter.type' [count]='counter.count' (click)='incCounter(counter)'> </sell-counter>
+      </div>
+    </div>
+
+
+    <button class="button" (click)='toggleButtonName()' [ngClass]="inWork?'stop':'start'" ion-button>{{startButtonName}}</button>
+    <img *ngIf='false' src="../../assets/imgs/night.png" alt="">
+    <day-card></day-card>
   </div>
-  <div class="counters">
-    <sell-counter></sell-counter>
-    <sell-counter></sell-counter>
-    <sell-counter></sell-counter>
-  </div>
-  
-  
-  <button class="button" (click)='toggleButtonName()' [ngClass]="inWork?'stop':'start'" ion-button >{{startButtonName}}</button>
-  <img *ngIf='false' src="../../assets/imgs/night.png" alt="">
 </ion-content>

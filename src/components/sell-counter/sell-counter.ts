@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CounterType } from '../../modules/counter-type';
 
 /**
  * Generated class for the SellCounterComponent component.
@@ -10,11 +11,14 @@ import { Component, Input } from '@angular/core';
   selector: 'sell-counter',
   templateUrl: 'sell-counter.html'
 })
-export class SellCounterComponent {
+export class SellCounterComponent implements OnInit {
 
-  @Input() count: number;
 
-  public increment():void{
-    this.count++;
+  public countValue:number;
+  @Input() count:number;
+  @Input() type:CounterType;
+
+  ngOnInit(): void {
   }
+  
 }

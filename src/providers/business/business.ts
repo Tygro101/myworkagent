@@ -44,7 +44,11 @@ export class Business {
         bonuse:0,
         id:date.getMonth()+1,
         salay:0,
-        sellSumCount:0,
+        sellSumCount:{
+          gold:0,
+          kids:0,
+          platinum:0
+        },
         yearId:date.getFullYear()
       }));
     }
@@ -53,7 +57,11 @@ export class Business {
         date : date.toJSON(),
         id : date.getDate(),
         monthId : date.getMonth()+1,
-        sellCount : 0,
+        sellCount : {
+          gold:0,
+          kids:0,
+          platinum:0
+        },
         workTime : 0
       }));
 

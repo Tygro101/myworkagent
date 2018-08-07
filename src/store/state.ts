@@ -24,13 +24,13 @@ export interface MonthWork{
     id:number;
     salay:number;
     bonuse:number;
-    sellSumCount:number;
+    sellSumCount:SellCount;
 }
 
 export interface DayWork{
     id:number;
     monthId:number;
-    sellCount:number;
+    sellCount:SellCount;
     workTime:number;
     date:string;
 }
@@ -40,4 +40,10 @@ export interface EndDayId{
   day:number;
   month:number;
   duration:number;
+}
+
+export interface SellCount{
+  platinum:number;
+  gold:number;
+  kids:number;
 }

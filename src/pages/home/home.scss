@@ -2,7 +2,12 @@
 
 
 page-home {
-    //background-image: url('../../assets/imgs//night.png') no-repeat center center fixed;
+    .home-wrapper{
+        text-align: center;
+        height: 100%;
+        display: block;
+    }
+    //background-image: url('../../assets/imgs//night.png')  no-repeat center center fixed;
     text-align: center;
     .button{
         transition: all 1s ease;
@@ -13,6 +18,24 @@ page-home {
         margin: 0 auto;
         text-align: center;
         display: flex;
+        padding: 20px;
+        div{
+            margin: auto;
+        }
+    }
+ 
+
+
+    .down-line{
+        
+        width: 100%;
+        height: 2px;
+        background: black;
+        border-radius: 3px;
+        right: 0;
+    }
+    .down-line-center{
+        border-bottom: 1px solid black;
     }
 }
 
@@ -28,4 +51,8 @@ page-home {
 
 ion-content{
     background: url('/assets/imgs//night.png') no-repeat center center fixed;
+}
+
+h2{
+    margin: 50px;
 }

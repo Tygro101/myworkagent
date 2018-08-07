@@ -1,6 +1,7 @@
 
 import { Action } from '@ngrx/store';
-import { GeneralSetting, MonthWork, DayWork, EndDayId } from '../state';
+import { GeneralSetting, MonthWork, DayWork, EndDayId, SellCount } from '../state';
+import { Counter } from '../../modules/counter-type';
 
 export const SET_START_DATE:string = "SET_START_DATE";
 export const START:string = "START";
@@ -10,6 +11,7 @@ export const ADD_YEAR:string = "ADD_YEAR";
 export const ADD_MONTH:string = "ADD_MONTH";
 export const ADD_DAY:string = "ADD_DAY";
 export const END_DAY:string = "END_DAY";
+export const INC_SELL_COUNT:string = "INC_SELL_COUNT"
 
 
 
@@ -62,4 +64,11 @@ export class EndDayTime implements Action{
     }
 }
 
-export type All = SetDateAction | DefaultAction | AddDayAction | AddMonthAction | StartAction | EndDayTime;
+export class IncrementSellCount implements Action{
+    readonly type: string = INC_SELL_COUNT;
+    constructor(public payload:Counter){
+
+    }
+}
+
+export type All = SetDateAction | DefaultAction | AddDayAction | AddMonthAction | StartAction | EndDayTime | IncrementSellCount;
