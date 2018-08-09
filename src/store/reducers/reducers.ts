@@ -49,7 +49,7 @@ function EndDayWork(state:AppState, dayId:EndDayId):AppState{
     //var dayId:EndDayId = <EndDayId>action.payload;
     var days:DayWork[] = state.days;
     var day:DayWork = days.pop();
-    day.workTime+= dayId.duration;
+    day.workTime = dayId.duration;
     days.push(day);
 
     var months:MonthWork[] = state.months;
@@ -57,7 +57,7 @@ function EndDayWork(state:AppState, dayId:EndDayId):AppState{
     currentMonth.sellSumCount.gold += day.sellCount.gold;
     currentMonth.sellSumCount.platinum += day.sellCount.platinum;
     currentMonth.sellSumCount.kids += day.sellCount.kids;
-    currentMonth.salay += day.workTime * 29;
+    //currentMonth.salay += day.workTime * 29;
     months.push(currentMonth);
     return {...state, days:days, months:months};
 }
@@ -67,13 +67,13 @@ function AddCount(state:AppState, counter:Counter){
     var day:DayWork = days.pop();
     switch(counter.type){
         case CounterType.GOLD:
-            day.sellCount.gold = counter.count;
+            day.sellCount.gold += 1;
             break;
         case CounterType.PLATINUM:
-            day.sellCount.platinum = counter.count;
+            day.sellCount.platinum += 1;
             break;
         case CounterType.KIDS:
-            day.sellCount.kids = counter.count;
+            day.sellCount.kids += 1;
             break;          
     }
     days.push(day);

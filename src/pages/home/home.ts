@@ -2,12 +2,13 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { WorkTimeComponent } from '../../components/work-time/work-time'
 import { Store, State } from '../../../node_modules/@ngrx/store';
-import { AppState, CurrentState, GeneralSetting } from '../../store/state';
+import { AppState, CurrentState, GeneralSetting, WorkTime, SellCount } from '../../store/state';
 import * as Actions from '../../store/actions/actions';
 import { saveState } from '../../store/localStoradg/localStoradg';
-import { getGeneralSettingsSelectore, selectCustomer } from '../../store/selectors/selectors';
+import { getGeneralSettingsSelectore } from '../../store/selectors/selectors';
 import { Business } from '../../providers/business/business';
 import { Counter, CounterType } from '../../modules/counter-type';
+import { HomeData } from '../../modules/home-data';
 
 @Component({
   selector: 'page-home',
@@ -35,7 +36,7 @@ export class HomePage implements OnInit{
         this.date = new Date(generalSetting.startWorkDate);
         this.manageButton();
         if(this.inWork){
-          this.timeComponent.start(this.inWork, this.date);
+          this.timeComponent.start(this.date, null);
         }
         
   }
@@ -44,15 +45,17 @@ export class HomePage implements OnInit{
   toggleButtonName():void{
     this.inWork = !this.inWork;
     this.manageButton();
-
+    
     if(this.inWork){
-      this.date = this.business.getDayTime(new Date());//we should check here if we are in the same day.
-      //this.store.dispatch(new Actions.SetDateAction(this.date.toJSON())); 
+      this.date = new Date();
+      var homeData:HomeData = this.business.getDayTime(this.date);
+      this.timeComponent.start(this.date, homeData.workTime);
+      this.initCounters(homeData.sellCount);
     }else{
-      this.business.endDayTime(this.date);
+      var workTime:WorkTime = this.timeComponent.stop();
+      this.business.endDayTime(this.date, workTime);
       this.initCounters();
     }
-    this.timeComponent.start(this.inWork, this.date);
   }
 
 
@@ -67,11 +70,11 @@ export class HomePage implements OnInit{
     }
   }
 
-  private initCounters(){
+  private initCounters(sellCount?:SellCount){
     this.counters = new Array<Counter>();
-    this.counters.push({count:0,type:CounterType.KIDS});
-    this.counters.push({count:0,type:CounterType.GOLD});
-    this.counters.push({count:0,type:CounterType.PLATINUM});
+    this.counters.push({count:sellCount?sellCount.kids : 0,type:CounterType.KIDS});
+    this.counters.push({count:sellCount?sellCount.gold : 0,type:CounterType.GOLD});
+    this.counters.push({count:sellCount?sellCount.platinum : 0,type:CounterType.PLATINUM});
   }
 }
 

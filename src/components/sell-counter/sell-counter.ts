@@ -26,9 +26,7 @@ export class SellCounterComponent implements OnInit {
     store.select(getDaysSelectore).subscribe((days: DayWork[]) => {
       this.sumCount = {platinum:0, kids:0, gold:0}
       if (days.length > 0) {
-        this.sumCount = days.filter((day: DayWork) => (day.id = this.currentDayId))
-        .map(res => res.sellCount)
-            .reduce((sumCount: SellCount, curCount: SellCount) => this.addSellCounts(sumCount , curCount), this.sumCount);
+        this.sumCount = days.filter((day: DayWork) => (day.id = this.currentDayId))[0].sellCount;
       }
       console.log(this.sumCount);
     });

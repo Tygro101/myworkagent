@@ -31,15 +31,22 @@ export interface DayWork{
     id:number;
     monthId:number;
     sellCount:SellCount;
-    workTime:number;
+    workTime:WorkTime;
     date:string;
+}
+
+
+export interface WorkTime{
+  hours:number;
+  minutes: number;
+  seconds: number;
 }
 
 
 export interface EndDayId{
   day:number;
   month:number;
-  duration:number;
+  duration:WorkTime;
 }
 
 export interface SellCount{
