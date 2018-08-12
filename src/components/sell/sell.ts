@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 
 /**
  * Generated class for the SellComponent component.
@@ -7,16 +7,33 @@ import { Component } from '@angular/core';
  * Components.
  */
 @Component({
-  selector: 'sell',
-  templateUrl: 'sell.html'
+  selector: "sell",
+  templateUrl: "sell.html"
 })
-export class SellComponent {
-
+export class SellComponent implements OnInit {
+  @Input()
+  name: string;
+  @Input()
+  count: number;
+  public classAtt = "";
   text: string;
 
   constructor() {
-    console.log('Hello SellComponent Component');
-    this.text = '1';
+    console.log("Hello SellComponent Component");
+    this.text = "1";
   }
 
+  ngOnInit(): void {
+    switch (this.name) {
+      case "ילדים":
+        this.classAtt = "kids";
+        break;
+      case "פלטינום":
+        this.classAtt = "plat";
+        break;
+      case "זהב":
+        this.classAtt = "gold";
+        break;
+    }
+  }
 }

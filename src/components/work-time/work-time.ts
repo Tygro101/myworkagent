@@ -59,20 +59,30 @@ class TimeHolder {
   private hours: number;
   private stop: boolean;
   constructor(private date: Date, private workTime?: WorkTime) {
-    if (workTime) {
-      this.hours = workTime.hours;
-      this.seconds = workTime.seconds;
-      this.minutes = workTime.minutes;
-    } else {
+
+    if(workTime){
+      date.setHours(date.getHours() - workTime.hours);
+      date.setMinutes(date.getMinutes() - workTime.minutes);
+      date.setSeconds(date.getSeconds() - workTime.seconds);
+    }
+
+    if(date){
       var duration = moment.duration(moment(new Date()).diff(date));
+
+   
+
       this.hours = duration.get("hours"); //if hours > 9 what should we do?
       if (this.hours > 9) {
-        this.stop = false;
+        this.stop = true;
       }
 
+      
       this.seconds = duration.get("seconds");
       this.minutes = duration.get("minutes");
     }
+    
+
+
   }
 
   public increment(): string {

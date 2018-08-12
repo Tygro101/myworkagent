@@ -1,4 +1,4 @@
-import { AppState, GeneralSetting, DayWork, EndDayId, MonthWork } from '../state'
+import { AppState, GeneralSetting, DayWork, EndDayId, MonthWork, WorkTime } from '../state'
 import * as Actions from '../actions/actions'
 export type Action = Actions.All;
 import { saveState , loadState } from '../localStoradg/localStoradg'
@@ -34,6 +34,14 @@ export function rootReducer(state:AppState = persistedState, action:Action):AppS
             months.push(month);
             return {...state, months:months};
 
+        case Actions.UPDATE_MONTH:
+            var month:MonthWork = <MonthWork>action.payload;
+            var months:MonthWork[] = state.months;
+            months.pop();
+            months.push(month);
+            return {...state, months:months};
+
+
         case Actions.END_DAY:
             return EndDayWork(state,<EndDayId>action.payload);
 
@@ -51,31 +59,58 @@ function EndDayWork(state:AppState, dayId:EndDayId):AppState{
     var day:DayWork = days.pop();
     day.workTime = dayId.duration;
     days.push(day);
-
     var months:MonthWork[] = state.months;
     var currentMonth:MonthWork = months.pop();
-    currentMonth.sellSumCount.gold += day.sellCount.gold;
-    currentMonth.sellSumCount.platinum += day.sellCount.platinum;
-    currentMonth.sellSumCount.kids += day.sellCount.kids;
-    //currentMonth.salay += day.workTime * 29;
+    //currentMonth.sellSumCount.gold += day.sellCount.gold;
+    //currentMonth.sellSumCount.platinum += day.sellCount.platinum;
+    //currentMonth.sellSumCount.kids += day.sellCount.kids;
+    currentMonth.workTime = addWorkTime(currentMonth.workTime, day.workTime);
     months.push(currentMonth);
-    return {...state, days:days, months:months};
+    var generalSettings = state.generalSettings;
+    generalSettings.start = false;
+    return {...state, days:days, months:months, generalSettings:generalSettings};
 }
 
 function AddCount(state:AppState, counter:Counter){
     var days:DayWork[] = state.days;
     var day:DayWork = days.pop();
+    var months:MonthWork[] = state.months;
+    var month:MonthWork = months.pop();
     switch(counter.type){
         case CounterType.GOLD:
             day.sellCount.gold += 1;
+            month.sellSumCount.gold += 1;
             break;
         case CounterType.PLATINUM:
             day.sellCount.platinum += 1;
+            month.sellSumCount.platinum += 1;
             break;
         case CounterType.KIDS:
             day.sellCount.kids += 1;
+            month.sellSumCount.kids += 1;
             break;          
     }
     days.push(day);
-    return {...state, days:days};
+    months.push(month);
+    return {...state, days:days, months:months};
 }
+
+
+function addWorkTime(month: WorkTime, day: WorkTime): WorkTime {
+    var second:number = month.seconds + day.seconds;
+    var minutes = month.minutes + day.minutes;
+    var hours = month.hours + day.hours;
+    if(second>60){
+        second = second - 60;
+        minutes++;
+    }
+    if(minutes>60){
+        minutes = minutes - 60;
+        hours++;
+    }
+    return {
+      hours: hours,
+      minutes: minutes,
+      seconds: second
+    }
+  }

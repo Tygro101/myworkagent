@@ -17,6 +17,10 @@
 
     <button class="button" (click)='toggleButtonName()' [ngClass]="inWork?'stop':'start'" ion-button>{{startButtonName}}</button>
     <img *ngIf='false' src="../../assets/imgs/night.png" alt="">
-    <day-card></day-card>
+
+    
+    <div *ngFor="let month of month$ | async">
+      <month-card [month]='month'></month-card>
+    </div>
   </div>
 </ion-content>

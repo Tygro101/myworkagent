@@ -15,6 +15,7 @@ import {
 } from "../../store/state";
 import * as Actions from "../../store/actions/actions";
 import { HomeData } from "../../modules/home-data";
+import { Action } from "../../../node_modules/rxjs/scheduler/Action";
 
 /*
   Generated class for the DataLayerProvider provider.
@@ -31,6 +32,14 @@ export class Business {
       console.log(state);
       saveState(state);
     });
+  }
+
+  public getCurrentDay(date: Date): DayWork {
+    let days: DayWork[] = this.state.days.filter(
+      (day: DayWork) => (day.monthId = date.getMonth() + 1) && (day.id == date.getDate())
+    );
+    if (days.length > 0) return days[0];
+    return null;
   }
 
   public getDayTimeIfExist(date: Date) {
@@ -59,27 +68,22 @@ export class Business {
       (day: DayWork) => (day.monthId = date.getMonth() + 1)
     );
 
-    //if(!year){
-    //  this.store.dispatch(new Actions.AddYearAction());
-    //}
-    if (!months || !months.find(month => month.id == date.getMonth() + 1)) {
-      this.store.dispatch(
-        new Actions.AddMonthAction({
-          bonuse: 0,
-          id: date.getMonth() + 1,
-          salay: 0,
-          sellSumCount: {
-            gold: 0,
-            kids: 0,
-            platinum: 0
-          },
-          yearId: date.getFullYear()
-        })
+    var currentDay: DayWork = days.find(
+      (day: DayWork) => day.id == date.getDate()
+    );
+    var currentMonth: MonthWork = months.find(
+      month => month.id == date.getMonth() + 1
+    );
+
+    if (currentDay && currentMonth) {
+      currentMonth.workTime = this.subtractWorkTime(
+        currentMonth.workTime,
+        currentDay.workTime
       );
-    }
-    if (!days || !days.find((day: DayWork) => (day.id == date.getDate()) && (day.monthId == date.getMonth() + 1))) {
-      this.store.dispatch(
-        new Actions.AddDayAction({
+      this.store.dispatch(new Actions.UpdateMonthAction(currentMonth));
+    } else {
+      if (!days || !currentDay) {
+        currentDay = {
           date: date.toJSON(),
           id: date.getDate(),
           monthId: date.getMonth() + 1,
@@ -93,8 +97,29 @@ export class Business {
             minutes: 0,
             seconds: 0
           }
-        })
-      );
+        };
+        this.store.dispatch(new Actions.AddDayAction(currentDay));
+      }
+
+      if (!months || !currentMonth) {
+        currentMonth = {
+          bonuse: 0,
+          id: date.getMonth() + 1,
+          salay: 0,
+          sellSumCount: {
+            gold: 0,
+            kids: 0,
+            platinum: 0
+          },
+          workTime: {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          },
+          yearId: date.getFullYear()
+        };
+        this.store.dispatch(new Actions.AddMonthAction(currentMonth));
+      }
     }
 
     this.store.dispatch(
@@ -103,15 +128,16 @@ export class Business {
         start: true
       })
     );
-    var daysWork: DayWork[] = this.state.days.filter(
-      (day: DayWork) =>
-        day.monthId == date.getMonth() + 1 && day.id == date.getDate()
-    );
-    if (daysWork && daysWork.length > 0) {
+
+    //var daysWork: DayWork[] = this.state.days.filter(
+    //  (day: DayWork) =>
+    //    day.monthId == date.getMonth() + 1 && day.id == date.getDate()
+    //);
+    if (currentDay) {
       return {
-        sellCount:daysWork[0].sellCount,
-        workTime:daysWork[0].workTime
-      }//daysWork[0].workTime;
+        sellCount: currentDay.sellCount,
+        workTime: currentDay.workTime
+      }; //daysWork[0].workTime;
     }
     return null;
     //}else{
@@ -126,5 +152,13 @@ export class Business {
         duration: workTime
       })
     );
+  }
+
+  subtractWorkTime(month: WorkTime, day: WorkTime): WorkTime {
+    return {
+      hours: month.hours - day.hours,
+      minutes: month.minutes - day.minutes,
+      seconds: month.seconds - day.seconds
+    };
   }
 }

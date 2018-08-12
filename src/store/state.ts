@@ -25,6 +25,7 @@ export interface MonthWork{
     salay:number;
     bonuse:number;
     sellSumCount:SellCount;
+    workTime:WorkTime;
 }
 
 export interface DayWork{

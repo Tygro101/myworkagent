@@ -9,6 +9,7 @@ export const DEFAULT:string = "DEFAULT";
 export const RESET:string = "DEFAULT";
 export const ADD_YEAR:string = "ADD_YEAR";
 export const ADD_MONTH:string = "ADD_MONTH";
+export const UPDATE_MONTH:string = "UPDATE_MONTH";
 export const ADD_DAY:string = "ADD_DAY";
 export const END_DAY:string = "END_DAY";
 export const INC_SELL_COUNT:string = "INC_SELL_COUNT"
@@ -29,6 +30,12 @@ export class SetDateAction implements Action{
 
 export class AddMonthAction implements Action{
     readonly type: string = ADD_MONTH;  
+    constructor(public payload:MonthWork){
+    }
+}
+
+export class UpdateMonthAction implements Action{
+    readonly type: string = UPDATE_MONTH;  
     constructor(public payload:MonthWork){
     }
 }
@@ -71,4 +78,4 @@ export class IncrementSellCount implements Action{
     }
 }
 
-export type All = SetDateAction | DefaultAction | AddDayAction | AddMonthAction | StartAction | EndDayTime | IncrementSellCount;
+export type All = SetDateAction | DefaultAction | AddDayAction | AddMonthAction | StartAction | EndDayTime | IncrementSellCount | UpdateMonthAction;

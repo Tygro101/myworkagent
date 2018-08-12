@@ -15,31 +15,6 @@
     sell {
       margin: 0 auto;
     }
-    .drop {
-        text-align: center;
-      background-color: #656565;
-      width: 25px;
-      margin: 0 auto;
-      margin-bottom: 8px;
-      height: 25px;
-      -webkit-border-top-left-radius: 0;
-      -webkit-border-top-right-radius: 75px;
-      -webkit-border-bottom-right-radius: 75px;
-      -webkit-border-bottom-left-radius: 75px;
-      -webkit-transform: rotate(225deg);
-      //box-shadow: 1px 1px 7px #1a1a1a;
-    }
-    .img{
-        width: 30px;
-        height: 30px;
-        background: #969696;
-        border-radius: 50%;
-        img {
-            width: 15px;
-            height: 15px;
-          }
-    }
-
   }
   .title {
     font-family: fantasy;

@@ -2,13 +2,14 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { WorkTimeComponent } from '../../components/work-time/work-time'
 import { Store, State } from '../../../node_modules/@ngrx/store';
-import { AppState, CurrentState, GeneralSetting, WorkTime, SellCount } from '../../store/state';
+import { AppState, CurrentState, GeneralSetting, WorkTime, SellCount, MonthWork, DayWork } from '../../store/state';
 import * as Actions from '../../store/actions/actions';
 import { saveState } from '../../store/localStoradg/localStoradg';
-import { getGeneralSettingsSelectore } from '../../store/selectors/selectors';
+import { getGeneralSettingsSelectore, currentMonthSelector } from '../../store/selectors/selectors';
 import { Business } from '../../providers/business/business';
 import { Counter, CounterType } from '../../modules/counter-type';
 import { HomeData } from '../../modules/home-data';
+import { Observable } from '../../../node_modules/rxjs/Observable';
 
 @Component({
   selector: 'page-home',
@@ -18,9 +19,10 @@ export class HomePage implements OnInit{
   @ViewChild(WorkTimeComponent) timeComponent: WorkTimeComponent;
   private inWork:boolean;
   private startButtonName:string;
-  private startButtonColor:string;
   public  date:Date;
   private counters:Array<Counter>;
+  public currentMonth:MonthWork;
+  public month$:Observable<MonthWork[]>;
 
 
 
@@ -36,8 +38,11 @@ export class HomePage implements OnInit{
         this.date = new Date(generalSetting.startWorkDate);
         this.manageButton();
         if(this.inWork){
-          this.timeComponent.start(this.date, null);
+          var dayWork:DayWork = this.business.getCurrentDay(this.date);
+          this.timeComponent.start(this.date, dayWork?dayWork.workTime:null);
         }
+        this.month$ = this.store.select(currentMonthSelector(this.date.getMonth()+1));
+
         
   }
 
