@@ -66,7 +66,7 @@ export class StartAction implements Action{
 
 export class EndDayTime implements Action{
     readonly type: string = END_DAY;
-    constructor(public payload:EndDayId){
+    constructor(public payload:DayWork){
 
     }
 }

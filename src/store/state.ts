@@ -15,6 +15,10 @@ export interface CurrentState {
   state: AppState;
 }
 
+export interface Months{
+  months:Array<MonthWork>;
+}
+
 export interface YearWork{
     id:number;
 }
@@ -31,6 +35,7 @@ export interface MonthWork{
 export interface DayWork{
     id:number;
     monthId:number;
+    yearId:number;
     sellCount:SellCount;
     workTime:WorkTime;
     date:string;

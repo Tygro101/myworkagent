@@ -5,7 +5,7 @@ import { Store, State } from '../../../node_modules/@ngrx/store';
 import { AppState, CurrentState, GeneralSetting, WorkTime, SellCount, MonthWork, DayWork } from '../../store/state';
 import * as Actions from '../../store/actions/actions';
 import { saveState } from '../../store/localStoradg/localStoradg';
-import { getGeneralSettingsSelectore, currentMonthSelector } from '../../store/selectors/selectors';
+import { getGeneralSettingsSelectore, currentMonthSelector, getMonthsSelectore, getStateSelectore } from '../../store/selectors/selectors';
 import { Business } from '../../providers/business/business';
 import { Counter, CounterType } from '../../modules/counter-type';
 import { HomeData } from '../../modules/home-data';
@@ -19,10 +19,12 @@ export class HomePage implements OnInit{
   @ViewChild(WorkTimeComponent) timeComponent: WorkTimeComponent;
   private inWork:boolean;
   private startButtonName:string;
+  private dayWork:DayWork;
   public  date:Date;
   private counters:Array<Counter>;
   public currentMonth:MonthWork;
-  public month$:Observable<MonthWork[]>;
+  public months:MonthWork[];
+  public defaultDate:Date;
 
 
 
@@ -30,6 +32,7 @@ export class HomePage implements OnInit{
     this.inWork = false;
     this.startButtonName = "Start";  
     this.initCounters();
+    this.defaultDate = new Date();
   }
 
   ngOnInit(): void {
@@ -38,10 +41,12 @@ export class HomePage implements OnInit{
         this.date = new Date(generalSetting.startWorkDate);
         this.manageButton();
         if(this.inWork){
-          var dayWork:DayWork = this.business.getCurrentDay(this.date);
-          this.timeComponent.start(this.date, dayWork?dayWork.workTime:null);
+          this.dayWork = this.business.getCurrentDay(this.date);
+          this.timeComponent.start(this.date, this.dayWork?this.dayWork.workTime:null);
         }
-        this.month$ = this.store.select(currentMonthSelector(this.date.getMonth()+1));
+        this.store.select(getStateSelectore).subscribe((state:AppState)=>{
+          this.months = state.months.filter((month:MonthWork)=> (month.yearId = this.defaultDate.getFullYear()) && (month.id == (this.defaultDate.getMonth()+1)));
+        })
 
         
   }
@@ -53,12 +58,14 @@ export class HomePage implements OnInit{
     
     if(this.inWork){
       this.date = new Date();
-      var homeData:HomeData = this.business.getDayTime(this.date);
-      this.timeComponent.start(this.date, homeData.workTime);
-      this.initCounters(homeData.sellCount);
+      //this.date.setDate(this.date.getDate()+ 1);
+      this.dayWork = this.business.getDayTime(this.date);
+      this.timeComponent.start(this.date, this.dayWork.workTime);
+      this.initCounters(this.dayWork.sellCount);
     }else{
       var workTime:WorkTime = this.timeComponent.stop();
-      this.business.endDayTime(this.date, workTime);
+      this.dayWork.workTime = workTime;
+      this.business.endDayTime(this.dayWork);
       this.initCounters();
     }
   }

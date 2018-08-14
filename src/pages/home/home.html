@@ -19,7 +19,7 @@
     <img *ngIf='false' src="../../assets/imgs/night.png" alt="">
 
     
-    <div *ngFor="let month of month$ | async">
+    <div *ngFor="let month of months">
       <month-card [month]='month'></month-card>
     </div>
   </div>

@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Store } from "../../../node_modules/@ngrx/store";
 import {
-  getDateSelectore,
-  getStateSelectore
+  getStateSelectore, getMonthsSelectore
 } from "../../store/selectors/selectors";
 import { saveState } from "../../store/localStoradg/localStoradg";
 import {
@@ -14,15 +13,8 @@ import {
   WorkTime
 } from "../../store/state";
 import * as Actions from "../../store/actions/actions";
-import { HomeData } from "../../modules/home-data";
-import { Action } from "../../../node_modules/rxjs/scheduler/Action";
 
-/*
-  Generated class for the DataLayerProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class Business {
   private state: AppState;
@@ -36,88 +28,30 @@ export class Business {
 
   public getCurrentDay(date: Date): DayWork {
     let days: DayWork[] = this.state.days.filter(
-      (day: DayWork) => (day.monthId = date.getMonth() + 1) && (day.id == date.getDate())
+      (day: DayWork) =>
+        (day.monthId = date.getMonth() + 1) && day.id == date.getDate()
     );
     if (days.length > 0) return days[0];
     return null;
   }
 
-  public getDayTimeIfExist(date: Date) {
-    let days: DayWork[] = this.state.days.filter(
-      (day: DayWork) => (day.monthId = date.getMonth() + 1)
-    );
-    if (days && days.find(day => day.id == date.getDate())) {
-      return new Date(
-        this.state.days.filter(
-          (day: DayWork) =>
-            (day.monthId = date.getMonth() + 1) && day.id == date.getDate()
-        )[0].date
-      );
-    }
-    return null;
-  }
+  public getDayTime(date: Date): DayWork {
+    let years: YearWork[] = this.state.years;
+    let months: MonthWork[] = this.state.months;
+    let days: DayWork[] = this.state.days;
 
-  public getDayTime(date: Date): HomeData {
-    let year: YearWork = this.state.years.filter(
-      (year: YearWork) => (year.id = date.getFullYear())
-    )[0];
-    let months: MonthWork[] = this.state.months.filter(
-      (month: MonthWork) => (month.yearId = date.getFullYear())
-    );
-    let days: DayWork[] = this.state.days.filter(
-      (day: DayWork) => (day.monthId = date.getMonth() + 1)
-    );
-
-    var currentDay: DayWork = days.find(
-      (day: DayWork) => day.id == date.getDate()
-    );
-    var currentMonth: MonthWork = months.find(
-      month => month.id == date.getMonth() + 1
-    );
+    let currentMonth: MonthWork = months[0];
+    let currentDay: DayWork = days[0];
 
     if (currentDay && currentMonth) {
-      currentMonth.workTime = this.subtractWorkTime(
-        currentMonth.workTime,
-        currentDay.workTime
-      );
-      this.store.dispatch(new Actions.UpdateMonthAction(currentMonth));
     } else {
-      if (!days || !currentDay) {
-        currentDay = {
-          date: date.toJSON(),
-          id: date.getDate(),
-          monthId: date.getMonth() + 1,
-          sellCount: {
-            gold: 0,
-            kids: 0,
-            platinum: 0
-          },
-          workTime: {
-            hours: 0,
-            minutes: 0,
-            seconds: 0
-          }
-        };
+      if (!currentDay) {
+        currentDay = this.getDefualtDay(date);
         this.store.dispatch(new Actions.AddDayAction(currentDay));
       }
 
-      if (!months || !currentMonth) {
-        currentMonth = {
-          bonuse: 0,
-          id: date.getMonth() + 1,
-          salay: 0,
-          sellSumCount: {
-            gold: 0,
-            kids: 0,
-            platinum: 0
-          },
-          workTime: {
-            hours: 0,
-            minutes: 0,
-            seconds: 0
-          },
-          yearId: date.getFullYear()
-        };
+      if (!currentMonth) {
+        currentMonth = this.getDefualtMonth(date);
         this.store.dispatch(new Actions.AddMonthAction(currentMonth));
       }
     }
@@ -128,37 +62,86 @@ export class Business {
         start: true
       })
     );
-
-    //var daysWork: DayWork[] = this.state.days.filter(
-    //  (day: DayWork) =>
-    //    day.monthId == date.getMonth() + 1 && day.id == date.getDate()
-    //);
-    if (currentDay) {
-      return {
-        sellCount: currentDay.sellCount,
-        workTime: currentDay.workTime
-      }; //daysWork[0].workTime;
-    }
-    return null;
-    //}else{
-    //return new Date(this.state.days.filter((day:DayWork)=>(day.monthId = date.getMonth()+1) && (day.id == date.getDate()))[0].date);
+    return currentDay;
   }
 
-  endDayTime(date: Date, workTime: WorkTime) {
+  endDayTime(dayWork:DayWork):void {
+    var updatedMonth:MonthWork = this.state.months.pop();
+    updatedMonth.workTime = this.updateMonth(updatedMonth);
     this.store.dispatch(
-      new Actions.EndDayTime({
-        day: date.getDate(),
-        month: date.getMonth() + 1,
-        duration: workTime
+      new Actions.EndDayTime(dayWork)
+    );
+    this.store.dispatch(
+      new Actions.StartAction({
+        startWorkDate: '',
+        start: false
       })
+    );
+    this.store.dispatch(
+      new Actions.UpdateMonthAction(updatedMonth)
     );
   }
 
-  subtractWorkTime(month: WorkTime, day: WorkTime): WorkTime {
+  private updateMonth(monthWork:MonthWork):WorkTime{
+    var days:DayWork[] = this.state.days;
+    return days.filter((dayWork:DayWork)=> dayWork.monthId == monthWork.id && dayWork.yearId == monthWork.yearId).map((dayWork:DayWork)=> dayWork.workTime)
+    .reduce((sumValue:WorkTime,currentValue:WorkTime)=> this.sumWorkTime(sumValue,currentValue))
+  }
+
+  sumWorkTime(sum: WorkTime, current: WorkTime): WorkTime {
+    var second:number = sum.seconds + current.seconds;
+    var minutes = sum.minutes + current.minutes;
+    var hours = sum.hours + current.hours;
+    if(second>60){
+        second = second - 60;
+        minutes++;
+    }
+    if(minutes>60){
+        minutes = minutes - 60;
+        hours++;
+    }
     return {
-      hours: month.hours - day.hours,
-      minutes: month.minutes - day.minutes,
-      seconds: month.seconds - day.seconds
+      hours: hours,
+      minutes: minutes,
+      seconds: second
+    }
+  }
+
+  private getDefualtDay(date: Date): DayWork {
+    return {
+      date: date.toJSON(),
+      id: date.getDate(),
+      monthId: date.getMonth() + 1,
+      yearId: date.getFullYear(),
+      sellCount: {
+        gold: 0,
+        kids: 0,
+        platinum: 0
+      },
+      workTime: {
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      }
+    };
+  }
+
+  private getDefualtMonth(date: Date): MonthWork {
+    return {
+      bonuse: 0,
+      id: date.getMonth() + 1,
+      salay: 0,
+      sellSumCount: {
+        gold: 0,
+        kids: 0,
+        platinum: 0
+      },
+      workTime: {
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      },
+      yearId: date.getFullYear()
     };
   }
 }

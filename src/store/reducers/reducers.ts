@@ -35,7 +35,7 @@ export function rootReducer(state:AppState = persistedState, action:Action):AppS
             return {...state, months:months};
 
         case Actions.UPDATE_MONTH:
-            var month:MonthWork = <MonthWork>action.payload;
+            var month:MonthWork = action.payload as MonthWork;
             var months:MonthWork[] = state.months;
             months.pop();
             months.push(month);
@@ -43,7 +43,7 @@ export function rootReducer(state:AppState = persistedState, action:Action):AppS
 
 
         case Actions.END_DAY:
-            return EndDayWork(state,<EndDayId>action.payload);
+            return EndDayWork(state, action.payload as DayWork);
 
         case Actions.INC_SELL_COUNT:
             return AddCount(state,<Counter>action.payload);
@@ -53,28 +53,18 @@ export function rootReducer(state:AppState = persistedState, action:Action):AppS
 }
 
 
-function EndDayWork(state:AppState, dayId:EndDayId):AppState{
+function EndDayWork(state:AppState, dayWork:DayWork):AppState{
     //var dayId:EndDayId = <EndDayId>action.payload;
-    var days:DayWork[] = state.days;
-    var day:DayWork = days.pop();
-    day.workTime = dayId.duration;
-    days.push(day);
-    var months:MonthWork[] = state.months;
-    var currentMonth:MonthWork = months.pop();
-    //currentMonth.sellSumCount.gold += day.sellCount.gold;
-    //currentMonth.sellSumCount.platinum += day.sellCount.platinum;
-    //currentMonth.sellSumCount.kids += day.sellCount.kids;
-    currentMonth.workTime = addWorkTime(currentMonth.workTime, day.workTime);
-    months.push(currentMonth);
-    var generalSettings = state.generalSettings;
-    generalSettings.start = false;
-    return {...state, days:days, months:months, generalSettings:generalSettings};
+    var days:DayWork[] = Object.assign([], state.days)
+    days.pop();
+    days.push(dayWork);
+    return {...state, days:days};
 }
 
 function AddCount(state:AppState, counter:Counter){
-    var days:DayWork[] = state.days;
+    var days:DayWork[] = Object.assign([],state.days);
     var day:DayWork = days.pop();
-    var months:MonthWork[] = state.months;
+    var months:MonthWork[] = Object.assign([],state.months);
     var month:MonthWork = months.pop();
     switch(counter.type){
         case CounterType.GOLD:
@@ -96,21 +86,3 @@ function AddCount(state:AppState, counter:Counter){
 }
 
 
-function addWorkTime(month: WorkTime, day: WorkTime): WorkTime {
-    var second:number = month.seconds + day.seconds;
-    var minutes = month.minutes + day.minutes;
-    var hours = month.hours + day.hours;
-    if(second>60){
-        second = second - 60;
-        minutes++;
-    }
-    if(minutes>60){
-        minutes = minutes - 60;
-        hours++;
-    }
-    return {
-      hours: hours,
-      minutes: minutes,
-      seconds: second
-    }
-  }
