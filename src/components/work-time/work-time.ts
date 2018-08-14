@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import * as moment from "moment";
 import { Store } from "../../../node_modules/@ngrx/store";
 import {
@@ -7,11 +7,10 @@ import {
 } from "../../store/selectors/selectors";
 import {
   CurrentState,
-  GeneralSetting,
-  WorkTime,
-  DayWork
+  WorkTime
 } from "../../store/state";
-import { ThrowStmt } from "../../../node_modules/@angular/compiler";
+import { GetDateProvider } from "../../providers/get-date/get-date";
+
 
 /**
  * Generated class for the WorkTimeComponent component.
@@ -27,7 +26,7 @@ export class WorkTimeComponent implements OnInit {
   private time: string;
   private timeHolder: TimeHolder;
   private handle: number;
-  constructor(private store: Store<CurrentState>) {
+  constructor(private store: Store<CurrentState>, private getDate:GetDateProvider) {
     this.time = "00:00:00";
   }
 
@@ -36,7 +35,7 @@ export class WorkTimeComponent implements OnInit {
   public start(date: Date, workTime: WorkTime): void {
     //this.date = new Date(date); // get date from storedge
 
-    this.timeHolder = new TimeHolder(date, workTime);
+    this.timeHolder = new TimeHolder(date, workTime, this.getDate);
     this.handle = setInterval(() => {
       this.Increment();
     }, 1000);
@@ -58,7 +57,7 @@ class TimeHolder {
   private minutes: number;
   private hours: number;
   private stop: boolean;
-  constructor(private date: Date, private workTime?: WorkTime) {
+  constructor(private date: Date, private workTime: WorkTime, getDate:GetDateProvider) {
 
     if(workTime){
       date.setHours(date.getHours() - workTime.hours);
@@ -67,9 +66,7 @@ class TimeHolder {
     }
 
     if(date){
-      var duration = moment.duration(moment(new Date()).diff(date));
-
-   
+      var duration = moment.duration(moment(getDate.getNewDate()).diff(date));
 
       this.hours = duration.get("hours"); //if hours > 9 what should we do?
       if (this.hours > 9) {
@@ -80,9 +77,6 @@ class TimeHolder {
       this.seconds = duration.get("seconds");
       this.minutes = duration.get("minutes");
     }
-    
-
-
   }
 
   public increment(): string {

@@ -16,6 +16,7 @@ import { Business } from '../providers/business/business';
 
 import { StoreModule } from '@ngrx/store';
 import { rootReducer } from '../store/reducers/reducers';
+import { GetDateProvider } from '../providers/get-date/get-date';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { rootReducer } from '../store/reducers/reducers';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Business
+    Business,
+    GetDateProvider
   ],
   exports:[
     WorkTimeComponent

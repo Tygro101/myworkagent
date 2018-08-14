@@ -40,21 +40,20 @@ export class Business {
     let months: MonthWork[] = this.state.months;
     let days: DayWork[] = this.state.days;
 
-    let currentMonth: MonthWork = months[0];
-    let currentDay: DayWork = days[0];
+    let currentMonth: MonthWork = months[months.length>0?months.length-1:0];
+    let currentDay: DayWork = days[days.length>0?days.length-1:0];
 
-    if (currentDay && currentMonth) {
-    } else {
-      if (!currentDay) {
+
+      if (!currentDay || currentDay.id != date.getDate()) {
         currentDay = this.getDefualtDay(date);
         this.store.dispatch(new Actions.AddDayAction(currentDay));
       }
 
-      if (!currentMonth) {
+      if (!currentMonth || currentMonth.id != (date.getMonth()+1)) {
         currentMonth = this.getDefualtMonth(date);
         this.store.dispatch(new Actions.AddMonthAction(currentMonth));
       }
-    }
+    
 
     this.store.dispatch(
       new Actions.StartAction({
