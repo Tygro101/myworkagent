@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.1.11",
+    "mathsass": "^0.10.1",
     "redux-devtools-extension": "^2.13.5",
     "typescript": "~2.6.2"
   },

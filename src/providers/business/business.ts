@@ -44,12 +44,12 @@ export class Business {
     let currentDay: DayWork = days[days.length>0?days.length-1:0];
 
 
-      if (!currentDay || currentDay.id != date.getDate()) {
+      if (!currentDay || currentDay.id != date.getDate() || currentDay.monthId != (date.getMonth()+1) || currentDay.yearId != date.getFullYear()) {
         currentDay = this.getDefualtDay(date);
         this.store.dispatch(new Actions.AddDayAction(currentDay));
       }
 
-      if (!currentMonth || currentMonth.id != (date.getMonth()+1)) {
+      if (!currentMonth || currentMonth.id != (date.getMonth()+1) || currentMonth.yearId != date.getFullYear()) {
         currentMonth = this.getDefualtMonth(date);
         this.store.dispatch(new Actions.AddMonthAction(currentMonth));
       }
@@ -65,7 +65,8 @@ export class Business {
   }
 
   endDayTime(dayWork:DayWork):void {
-    var updatedMonth:MonthWork = this.state.months.pop();
+    var months:MonthWork[] =  Object.assign([],this.state.months);
+    var updatedMonth:MonthWork = months.pop();
     updatedMonth.workTime = this.updateMonth(updatedMonth);
     this.store.dispatch(
       new Actions.EndDayTime(dayWork)
