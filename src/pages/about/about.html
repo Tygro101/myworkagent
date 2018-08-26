@@ -1,9 +1,11 @@
 <ion-content padding>
-    <div class="wrapper">
+    <!--div class="wrapper">
         <div class="container">
             <img src="assets/imgs/work_in_progress.png" alt="">
             <span>בבניה</span>
         </div>
+    </div-->
+    <div *ngFor="let wrapper of monthsWrapper">
+        <month-card [month]='wrapper.month' [days]='wrapper.days'></month-card>
     </div>
-
 </ion-content>

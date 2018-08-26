@@ -1,40 +1,32 @@
-.card {
-  margin-top: 25px;
-  background: #fdfdfd9f;
-  border-radius: 5px;
-  height: auto;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
-  margin: 20px;
-  padding: 10px;
-
+.day-card {
+  display: flex;
+  width: auto;
   text-align: center;
-  //text-align: -webkit-right;
-  .sell-container {
-    text-align: center;
-    display: flex;
-    sell {
-      margin: 0 auto;
-    }
-  }
-  .title {
-    font-family: fantasy;
-    /* font-weight: bold; */
-    color: #585858;
-    border-bottom: 1px #4e4e4e solid;
+  direction:rtl;
+  margin-right: 10px;
+  margin-bottom: 8px;
+  span{
     font-size: 15px;
-    margin-bottom: 15px;
-    margin-left: 40px;
-    margin-right: 40px;
+    text-align: right;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .sell{
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    text-align: center;
   }
 
-  .count{
-    padding-top: 7px;
-    font-weight: bold;
-    width: 100%;
-    color: #c3c3c3;
-    height: 100%;
-    margin: auto;
-    font-size: 12px;
-    -webkit-transform: rotate(135deg) !important;
+  .platinum{
+    background: rgb(99, 99, 99);
+  }
+  
+  .gold{
+    background: rgb(196, 166, 0);
+  }
+  
+  .kids{
+    background:  #006978;
   }
 }

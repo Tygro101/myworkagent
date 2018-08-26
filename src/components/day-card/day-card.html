@@ -1,11 +1,8 @@
 <!-- Generated template for the DayCardComponent component -->
-<div class="card">
-  <div class="title">
-    סה"כ לחודש
-  </div>
-  <div class="sell-container">
-    <sell></sell>
-    <sell></sell>
-    <sell></sell>
-  </div>
+<div class="day-card">
+  <span>{{day.id}}/{{day.monthId}}</span>
+  <span>{{getWorkTimeString()}}</span>
+  <span class="sell platinum">{{day.sellCount.platinum}}</span>
+  <span class="sell gold">{{day.sellCount.gold}}</span>
+  <span class="sell kids">{{day.sellCount.kids}}</span>
 </div>

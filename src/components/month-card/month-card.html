@@ -10,20 +10,26 @@
   </div>
   <div class="salary">
     <div class="work-time">
-      <span style="width:180px">: סה"כ שעות עבודה</span>
+      <span style="width:180px">סה"כ שעות עבודה : </span>
       <span>{{getWorkTimeString()}}</span>
     </div>
     <div class="work-time">
-      <span style="width:180px">: רווח משעות עבודה</span>
+      <span style="width:180px">רווח משעות עבודה : </span>
       <span>{{calcWorkTimeSalary()}}</span>
     </div>
     <div class="work-time">
-      <span style="width:180px">: בונוס ממכירות</span>
+      <span style="width:180px">בונוס ממכירות : </span>
       <span>{{calcBonos()}}</span>
     </div>
     <div class="work-time">
-      <span style="width:180px">: משכורת</span>
+      <span style="width:180px">משכורת : </span>
       <span>{{salary()}}</span>
     </div>
+  </div>
+  <div *ngIf='days' class="title">
+      ימי עבודה החודש
+    </div>
+  <div *ngFor="let day of days">
+    <day-card [day]='day'></day-card>
   </div>
 </div>

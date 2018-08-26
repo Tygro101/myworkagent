@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { MonthWork, SellCount } from '../../store/state';
+import { MonthWork, SellCount, DayWork } from '../../store/state';
 import { TitleCasePipe } from '../../../node_modules/@angular/common';
 
 /**
@@ -14,6 +14,7 @@ import { TitleCasePipe } from '../../../node_modules/@angular/common';
 })
 export class MonthCardComponent implements OnInit {
   @Input() month:MonthWork;
+  @Input() days?:DayWork[];
 
   public workTime:string;
   public workTimeSalary:number;
@@ -34,21 +35,21 @@ export class MonthCardComponent implements OnInit {
   }
 
 
-  setView():void{
-    this.workTime = this.getWorkTimeString();
-    this.workTimeSalary = this.calcWorkTimeSalary()
-  }
+  //setView():void{
+  //  this.workTime = this.getWorkTimeString();
+  //  this.workTimeSalary = this.calcWorkTimeSalary()
+  //}
   calcWorkTimeSalary(): number {
-    return Number(((this.month.workTime.hours + this.month.workTime.minutes/60 + this.month.workTime.seconds/3600)*29).toFixed(4));
+    return Number(((this.month.workTime.hours + this.month.workTime.minutes/60 + this.month.workTime.seconds/3600)*28.1).toFixed(4));
   }
   getWorkTimeString():string{
     return this.format(this.month.workTime.hours)+":"+ this.format(this.month.workTime.minutes)+":"+this.format(this.month.workTime.seconds);
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['month']) {
-      this.setView();
-    }
-  }
+  //ngOnChanges(changes: SimpleChanges): void {
+  //  if(changes['month']) {
+  //    this.setView();
+  //  }
+  //}
 
   calcBonos():number{
     var sells:SellCount = this.month.sellSumCount;
