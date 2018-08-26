@@ -1,26 +1,43 @@
 sell-counter {
-    margin: 0 auto;
-    .counter-circle {
-        width: 40px;
-        height: 40px;
-        margin: 20px;
-        position: relative;
-        background: #bebebe;
-        border-radius: 50%;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
-        .counter {
-          color: #333333;
-          font-weight: bold;
-          font-size: 16px;
-          position: absolute;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          left: 50%;
-        }
-      }:first-child{
-          
-      }
+  margin:auto;
+  .container{
+    width: 70px;
+  }
+  .counter-circle {
+    width: 40px;
+    height: 40px;
+    margin: 20px;
+    position: relative;
+    background: #bebebe;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+    .counter {
+      color: #333333;
+      font-weight: bold;
+      font-size: 16px;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      left: 50%;
+    }
+  }
+  :first-child {
+  }
+  .arraw {
+    width: 20px;
+    height: 20px;
+  }
+  .bottom {
+    margin-top: 5px;
+  }
+
+  .title {
+    margin-bottom: 2px;
+    width: auto;
+    padding-right: 5px;
+    padding-left: 5px;
+    height: 18px;
+    background: #969696;
+    border-radius: 5px;
+  }
 }
-
-
-  

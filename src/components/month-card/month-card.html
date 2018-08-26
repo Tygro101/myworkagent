@@ -1,17 +1,29 @@
 <!-- Generated template for the DayCardComponent component -->
-<div class="card">
+<div class="card" (ionChange)='setView()'>
   <div class="title">
     סה"כ לחודש
   </div>
   <div class="sell-container">
-    <sell name='ילדים' [count] = 'month.sellSumCount.kids'></sell>
-    <sell name='זהב' [count] = 'month.sellSumCount.gold'></sell>
-    <sell name='פלטינום' [count] = 'month.sellSumCount.platinum'></sell>
+    <sell name='ילדים' [count]='month.sellSumCount.kids'></sell>
+    <sell name='זהב' [count]='month.sellSumCount.gold'></sell>
+    <sell name='פלטינום' [count]='month.sellSumCount.platinum'></sell>
   </div>
   <div class="salary">
     <div class="work-time">
-      <span style="width:180px">סה"כ שעות עבודה :</span>
-      <span>{{format(this.month.workTime.hours)}}:{{format(this.month.workTime.minutes)}}:{{format(this.month.workTime.seconds)}}</span>
+      <span style="width:180px">: סה"כ שעות עבודה</span>
+      <span>{{getWorkTimeString()}}</span>
+    </div>
+    <div class="work-time">
+      <span style="width:180px">: רווח משעות עבודה</span>
+      <span>{{calcWorkTimeSalary()}}</span>
+    </div>
+    <div class="work-time">
+      <span style="width:180px">: בונוס ממכירות</span>
+      <span>{{calcBonos()}}</span>
+    </div>
+    <div class="work-time">
+      <span style="width:180px">: משכורת</span>
+      <span>{{salary()}}</span>
     </div>
   </div>
 </div>

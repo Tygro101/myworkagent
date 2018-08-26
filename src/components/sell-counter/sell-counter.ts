@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { CounterType } from "../../modules/counter-type";
+import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
+import { CounterType, Counter } from "../../modules/counter-type";
 import { Store } from "../../../node_modules/@ngrx/store";
 import { CurrentState, DayWork, SellCount } from "../../store/state";
 import { getDaysSelectore } from "../../store/selectors/selectors";
@@ -15,11 +15,14 @@ import { getDaysSelectore } from "../../store/selectors/selectors";
   templateUrl: "sell-counter.html"
 })
 export class SellCounterComponent implements OnInit {
+
   public countValue: number;
-  @Input() count: number;
-  @Input() type: CounterType;
+  @Input() counter: Counter;
+  @Output() counterUp= new EventEmitter<Counter>();
+  @Output() counterDown= new EventEmitter<Counter>();
   currentDayId: number;
   sumCount: SellCount;
+  name:string;
 
   constructor(private store: Store<CurrentState>) {
     //this.currentDayId = new Date().getDate();
@@ -32,7 +35,9 @@ export class SellCounterComponent implements OnInit {
     //});
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.name = this.getName(this.counter);
+  }
 
   //private addSellCounts(sellCount1: SellCount, sellCount2: SellCount){
   //  var sellCount:SellCount={
@@ -42,6 +47,25 @@ export class SellCounterComponent implements OnInit {
   //  }
   //  return sellCount
   //}
+
+  up(){
+    this.counterUp.emit(this.counter);
+  }
+
+  down(){
+    this.counterDown.emit(this.counter);
+  }
+
+  getName(arg0: Counter): any {
+    switch(arg0.type){
+      case CounterType.GOLD:
+        return "זהב";
+      case CounterType.KIDS:
+        return "ילדים";
+      case CounterType.PLATINUM:
+        return "פלטינום";
+    }
+  }
 }
 
 

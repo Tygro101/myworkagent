@@ -49,7 +49,7 @@ export class HomePage implements OnInit {
     private getDate: GetDateProvider
   ) {
     this.inWork = false;
-    this.startButtonName = "Start";
+    this.startButtonName = "התחל";
     this.initCounters();
     this.defaultDate = getDate.getNewDate();
   }
@@ -94,15 +94,16 @@ export class HomePage implements OnInit {
   }
 
   manageButton(): any {
-    this.startButtonName = !this.inWork ? "Start" : "Stop";
+    this.startButtonName = !this.inWork ? "התחל" : "הפסק";
   }
 
-  incCounter(counter: Counter) {
+  counterChange(counter: Counter, action:string) {
     if (this.inWork) {
-      counter.count++;
+      action === "up"?counter.count++:counter.count--;
       this.store.dispatch(new Actions.IncrementSellCount(counter));
     }
   }
+  
 
   private initCounters(sellCount?: SellCount) {
     this.counters = new Array<Counter>();

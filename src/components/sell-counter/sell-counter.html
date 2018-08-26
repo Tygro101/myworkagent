@@ -1,6 +1,11 @@
 <!-- Generated template for the WorkTimeComponent component -->
-<div class="counter-circle">
-    <div class="counter">
-        {{count}}
+<div class="container">
+    <img (click)='up()' src="assets/imgs/arrow-up.svg" alt="" [ngClass]="{'arraw':true}">
+    <div class="title">{{name}}</div>
+    <div class="counter-circle">
+        <div class="counter">
+            {{counter.count}}
+        </div>
     </div>
+    <img (click)='down()' src="assets/imgs/arrow-down.svg" alt="" [ngClass]="{'arraw':true, 'bottom':true}">
 </div>

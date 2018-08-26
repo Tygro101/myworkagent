@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 
 /**
- * Generated class for the CounterMenuComponent component.
+ * Generated class for the CounterPickerComponent component.
  *
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
 @Component({
-  selector: 'counter-menu',
-  templateUrl: 'counter-menu.html'
+  selector: 'counter-picker',
+  templateUrl: 'counter-picker.html'
 })
-export class CounterMenuComponent {
+export class CounterPickerComponent {
 
   text: string;
 
   constructor() {
-    console.log('Hello CounterMenuComponent Component');
+    console.log('Hello CounterPickerComponent Component');
     this.text = 'Hello World';
   }
 
