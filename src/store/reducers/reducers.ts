@@ -68,16 +68,16 @@ function AddCount(state:AppState, counter:Counter){
     var month:MonthWork = months.pop();
     switch(counter.type){
         case CounterType.GOLD:
-            day.sellCount.gold += 1;
-            month.sellSumCount.gold += 1;
+            day.sellCount.gold = counter.count;
+            month.sellSumCount.gold = counter.count;
             break;
         case CounterType.PLATINUM:
-            day.sellCount.platinum += 1;
-            month.sellSumCount.platinum += 1;
+            day.sellCount.platinum = counter.count;
+            month.sellSumCount.platinum = counter.count;
             break;
         case CounterType.KIDS:
-            day.sellCount.kids += 1;
-            month.sellSumCount.kids += 1;
+            day.sellCount.kids = counter.count;
+            month.sellSumCount.kids = counter.count;
             break;          
     }
     days.push(day);

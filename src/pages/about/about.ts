@@ -43,7 +43,7 @@ export class AboutPage {
         days: this.days.filter((day: DayWork) => day.monthId == month.id)
       });
     });
-    console.log(this.monthsWrapper);
+    this.monthsWrapper = this.monthsWrapper.reverse();
   }
 }
 

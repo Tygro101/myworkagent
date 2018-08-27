@@ -50,7 +50,7 @@ export class HomePage implements OnInit {
   ) {
     this.inWork = false;
     this.startButtonName = "התחל";
-    this.initCounters();
+    
     this.defaultDate = getDate.getNewDate();
   }
 
@@ -62,6 +62,7 @@ export class HomePage implements OnInit {
     this.manageButton();
     if (this.inWork) {
       this.dayWork = this.business.getCurrentDay(this.date);
+      this.initCounters(this.dayWork.sellCount);
       this.timeComponent.start(
         this.date,
         this.dayWork ? this.dayWork.workTime : null

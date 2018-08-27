@@ -16,11 +16,8 @@ export class SellComponent implements OnInit {
   @Input()
   count: number;
   public classAtt = "";
-  text: string;
 
   constructor() {
-    console.log("Hello SellComponent Component");
-    this.text = "1";
   }
 
   ngOnInit(): void {

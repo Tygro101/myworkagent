@@ -6,7 +6,7 @@
   margin-right: 10px;
   margin-bottom: 8px;
   span{
-    font-size: 15px;
+    
     text-align: right;
     margin-right: 5px;
     margin-left: 5px;
@@ -19,14 +19,26 @@
   }
 
   .platinum{
+    color: white;
     background: rgb(99, 99, 99);
   }
   
   .gold{
+    color: white;
     background: rgb(196, 166, 0);
   }
   
   .kids{
+    color: white;
     background:  #006978;
+  }
+  .platinum, .gold, .kids{
+    font-size: 13px;
+    align-content: center;
+    display: inline-grid;
+  }
+
+  .date,.time{
+    font-size: 15px;
   }
 }
