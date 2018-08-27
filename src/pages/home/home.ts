@@ -50,7 +50,7 @@ export class HomePage implements OnInit {
   ) {
     this.inWork = false;
     this.startButtonName = "התחל";
-    
+    this.initCounters();
     this.defaultDate = getDate.getNewDate();
   }
 
