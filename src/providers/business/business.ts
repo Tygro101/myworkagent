@@ -10,7 +10,8 @@ import {
   DayWork,
   YearWork,
   MonthWork,
-  WorkTime
+  WorkTime,
+  SellCount
 } from "../../store/state";
 import * as Actions from "../../store/actions/actions";
 
@@ -67,7 +68,8 @@ export class Business {
   endDayTime(dayWork:DayWork):void {
     var months:MonthWork[] =  Object.assign([],this.state.months);
     var updatedMonth:MonthWork = months.pop();
-    updatedMonth.workTime = this.updateMonth(updatedMonth);
+    updatedMonth.workTime = this.updateMonthWorkTimne(updatedMonth);
+    updatedMonth.sellSumCount = this.updateMonthSells(updatedMonth);
     this.store.dispatch(
       new Actions.EndDayTime(dayWork)
     );
@@ -82,10 +84,25 @@ export class Business {
     );
   }
 
-  private updateMonth(monthWork:MonthWork):WorkTime{
-    var days:DayWork[] = this.state.days;
+  private updateMonthWorkTimne(monthWork:MonthWork):WorkTime{
+    var days:DayWork[] = Object.assign([], this.state.days);
     return days.filter((dayWork:DayWork)=> dayWork.monthId == monthWork.id && dayWork.yearId == monthWork.yearId).map((dayWork:DayWork)=> dayWork.workTime)
     .reduce((sumValue:WorkTime,currentValue:WorkTime)=> this.sumWorkTime(sumValue,currentValue))
+  }
+
+  private updateMonthSells(monthWork:MonthWork):SellCount{
+    var days:DayWork[] = Object.assign([], this.state.days);
+    return days.filter((dayWork:DayWork)=> dayWork.monthId == monthWork.id && dayWork.yearId == monthWork.yearId).map((dayWork:DayWork)=> dayWork.sellCount)
+    .reduce((sumValue:SellCount,currentValue:SellCount)=> this.sumSellCount(sumValue, currentValue));
+  }
+
+
+  sumSellCount(sum: SellCount, current: SellCount): SellCount {
+    return {
+      gold: sum.gold + current.gold,
+      kids: sum.kids + current.kids,
+      platinum: sum.platinum + current.platinum
+    }
   }
 
   sumWorkTime(sum: WorkTime, current: WorkTime): WorkTime {
