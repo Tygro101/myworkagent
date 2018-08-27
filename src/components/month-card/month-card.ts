@@ -8,6 +8,9 @@ import { TitleCasePipe } from '../../../node_modules/@angular/common';
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
+const monthNames = ["ינואר", "פרברואר", "מרץ", "אפריל", "מאי", "יוני",
+  "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"
+];
 @Component({
   selector: 'month-card',
   templateUrl: 'month-card.html'
@@ -18,6 +21,7 @@ export class MonthCardComponent implements OnInit {
 
   public workTime:string;
   public workTimeSalary:number;
+  public monthName:string;
 
   constructor() {
     
@@ -25,6 +29,7 @@ export class MonthCardComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.monthName = monthNames[this.month.id-1];
   }
 
   public format(val:number):string{

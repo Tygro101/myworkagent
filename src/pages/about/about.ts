@@ -15,14 +15,14 @@ export class AboutPage implements OnInit{
     
   }
   ngOnInit(): void {
-    this.months = this.state.getValue().state.months;
-    this.days = this.state.getValue().state.days;
+    this.months = Object.assign([], this.state.getValue().state.months);
+    this.days = Object.assign([], this.state.getValue().state.days);
     this.papulateMonthWrapper();
   }
   papulateMonthWrapper(): void {
     this.monthsWrapper = [];
     this.months.forEach((month:MonthWork)=>{
-      this.monthsWrapper.push({month:month, days:this.days.filter((day:DayWork)=> day.monthId = month.id)})
+      this.monthsWrapper.push({month:month, days:this.days.filter((day:DayWork)=> day.monthId == month.id)})
     })
     console.log(this.monthsWrapper);
   }
