@@ -20,8 +20,8 @@ export class WorkTimePickerComponent {
   constructor() {}
 
   end() {
-    if (this.startTime && this.endTime) {
-      this.endCall.emit(null);
+    if (!this.startTime || !this.endTime) {
+      this.endCall.emit({hours:0, minutes:0, seconds:0});
     }
     var startDate = moment(this.startTime, "HH:mm:ss");
     var endDate = moment(this.endTime, "HH:mm:ss");
@@ -32,4 +32,6 @@ export class WorkTimePickerComponent {
       seconds: 0
     });
   }
+
+
 }

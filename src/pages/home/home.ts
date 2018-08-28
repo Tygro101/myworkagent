@@ -132,18 +132,18 @@ export class HomePage implements OnInit {
 
   closeAndUpdate(event: WorkTime) {
     this.showTimePickerDialog = false;
-    if(event && event.hours && event.minutes){
-      this.timeComponent.setTime(event);
-    }
+
+    this.timeComponent.setTime(event);
+
     //if(event.startTime && event.endTime){
-      //var m = moment(event.startTime, 'HH:mm:ss')
-      //console.log(m.date());
-      //var startDate:Date = new Date(event.startTime);
-      //var endDate:Date = new Date(event.startTime);
-      
-      //this.store.dispatch(new )
-      
-      //this.timeComponent.setTime();
-   // }
+    //var m = moment(event.startTime, 'HH:mm:ss')
+    //console.log(m.date());
+    //var startDate:Date = new Date(event.startTime);
+    //var endDate:Date = new Date(event.startTime);
+
+    //this.store.dispatch(new )
+
+    //this.timeComponent.setTime();
+    // }
   }
 }

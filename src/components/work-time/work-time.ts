@@ -72,12 +72,7 @@ class TimeHolder {
     if(date){
       var duration = moment.duration(moment(getDate.getNewDate()).diff(date));
 
-      this.hours = duration.get("hours"); //if hours > 9 what should we do?
-      if (this.hours > 9) {
-        this.stop = true;
-      }
-
-      
+      this.hours = duration.get("hours"); //if hours > 9 what should we do?      
       this.seconds = duration.get("seconds");
       this.minutes = duration.get("minutes");
     }
