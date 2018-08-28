@@ -2,13 +2,11 @@
 <div class="container">
   <div class="i-cont">
     <input class="date-input" type="time"  [(ngModel)]="startTime">
-    <div>{{startTime}}</div>
     <label class="label pad" ion-button>התחלה</label>
   </div>
 
   <div class="i-cont">
     <input class="date-input" type="time"  [(ngModel)]="endTime">
-    <div>{{endTime}}</div>
     <label class="label pad" ion-button>סיום</label>
   </div>
   <button class="button done" (click)='end()' ion-button>בצע</button>
