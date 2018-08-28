@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from "@angular/core";
-import { NavController } from "ionic-angular";
+import { NavController, ToastController, Toast } from "ionic-angular";
 import { WorkTimeComponent } from "../../components/work-time/work-time";
 import { Store, State } from "../../../node_modules/@ngrx/store";
 
@@ -42,20 +42,22 @@ export class HomePage implements OnInit {
   public months: MonthWork[];
   public defaultDate: Date;
   public showTimePickerDialog: boolean;
+  private toast:Toast;
 
   constructor(
     public navCtrl: NavController,
     private business: Business,
     private store: Store<CurrentState>,
     private state: State<AppState>,
-    private getDate: GetDateProvider
+    private getDate: GetDateProvider,
+    private toastCtrl: ToastController
   ) {
     this.inWork = false;
     this.startButtonName = "התחל";
     this.initCounters();
     this.defaultDate = getDate.getNewDate();
-    this.showTimePickerDialog = false;
-  }
+    this.showTimePickerDialog = false;  
+  } 
 
   ngOnInit(): void {
     var generalSetting: GeneralSetting = this.state.getValue().state
@@ -105,6 +107,8 @@ export class HomePage implements OnInit {
     if (this.inWork) {
       action === "up" ? counter.count++ : counter.count--;
       this.store.dispatch(new Actions.IncrementSellCount(counter));
+    }else{
+      this.showToast();
     }
   }
 
@@ -127,6 +131,8 @@ export class HomePage implements OnInit {
   openDialog() {
     if (this.inWork) {
       this.showTimePickerDialog = true;
+    }else{
+      this.showToast();
     }
   }
 
@@ -145,5 +151,19 @@ export class HomePage implements OnInit {
 
     //this.timeComponent.setTime();
     // }
+  }
+  
+  showToast(){
+    this.toast = this.createToast();
+    this.toast.present();
+  }
+
+  createToast():Toast{
+    return this.toastCtrl.create({
+      message: 'התחל יום עבודה קודם',
+      duration: 3000,
+      position: 'top',
+      cssClass: 'toast-class'
+    });
   }
 }
