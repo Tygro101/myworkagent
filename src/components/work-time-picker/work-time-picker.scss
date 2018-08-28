@@ -1,0 +1,58 @@
+work-time-picker {
+  .container {
+    margin-top: 15px;
+    background: #c7c7c7;
+    border-radius: 5px;
+    height: auto;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+    margin: 5px;
+    padding: 10px;
+    z-index: 3;
+    text-align: center;
+    .i-cont {
+      align-items: center;
+      display: inline-flex;
+    }
+    .pad {
+      margin: 5px;
+      text-align: right;
+    }
+
+  }
+  .date-input {
+    display: block;
+    border: none;
+    border-bottom: solid 1px #1abc9c;
+    -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+    transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+    background: -webkit-linear-gradient(
+      top,
+      rgba(255, 255, 255, 0) 96%,
+      #1abc9c 4%
+    );
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 96%,
+      #1abc9c 4%
+    );
+    background-position: -200px 0;
+    background-size: 200px 100%;
+    background-repeat: no-repeat;
+    color: #0e6252;
+    max-width: 60px;
+    //max-width: 100px;
+  }
+
+  .label {
+    height: auto;
+    min-height: 25px;
+    transition: all 1s ease;
+    width: 50px;
+  }
+
+  .done{
+      background: #0e6252;
+      color: white;
+  }
+}
+   

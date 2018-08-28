@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { WorkTimeComponent } from "../../components/work-time/work-time";
 import { Store, State } from "../../../node_modules/@ngrx/store";
+
 import {
   AppState,
   CurrentState,
@@ -40,6 +41,7 @@ export class HomePage implements OnInit {
   public currentMonth: MonthWork;
   public months: MonthWork[];
   public defaultDate: Date;
+  public showTimePickerDialog: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -52,6 +54,7 @@ export class HomePage implements OnInit {
     this.startButtonName = "התחל";
     this.initCounters();
     this.defaultDate = getDate.getNewDate();
+    this.showTimePickerDialog = false;
   }
 
   ngOnInit(): void {
@@ -98,13 +101,12 @@ export class HomePage implements OnInit {
     this.startButtonName = !this.inWork ? "התחל" : "הפסק";
   }
 
-  counterChange(counter: Counter, action:string) {
+  counterChange(counter: Counter, action: string) {
     if (this.inWork) {
-      action === "up"?counter.count++:counter.count--;
+      action === "up" ? counter.count++ : counter.count--;
       this.store.dispatch(new Actions.IncrementSellCount(counter));
     }
   }
-  
 
   private initCounters(sellCount?: SellCount) {
     this.counters = new Array<Counter>();
@@ -120,5 +122,28 @@ export class HomePage implements OnInit {
       count: sellCount ? sellCount.platinum : 0,
       type: CounterType.PLATINUM
     });
+  }
+
+  openDialog() {
+    if (this.inWork) {
+      this.showTimePickerDialog = true;
+    }
+  }
+
+  closeAndUpdate(event: WorkTime) {
+    this.showTimePickerDialog = false;
+    if(event && event.hours && event.minutes){
+      this.timeComponent.setTime(event);
+    }
+    //if(event.startTime && event.endTime){
+      //var m = moment(event.startTime, 'HH:mm:ss')
+      //console.log(m.date());
+      //var startDate:Date = new Date(event.startTime);
+      //var endDate:Date = new Date(event.startTime);
+      
+      //this.store.dispatch(new )
+      
+      //this.timeComponent.setTime();
+   // }
   }
 }

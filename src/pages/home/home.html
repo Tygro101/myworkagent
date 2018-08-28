@@ -3,7 +3,8 @@
     <h3>!יום עבודה נעים</h3>
 
     <div class="time-parent">
-      <work-time></work-time>
+      <work-time-picker *ngIf='showTimePickerDialog' (endCall)='closeAndUpdate($event)'></work-time-picker>
+      <work-time (click)='openDialog()'></work-time>
     </div>
 
     <div class="counters">

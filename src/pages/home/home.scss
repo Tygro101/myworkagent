@@ -56,3 +56,14 @@ h3{
   color: #c7c7c7;
   margin: 10px;
 }
+work-time-picker{
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  left: 0;
+  /* margin: 200px; */
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  height: 224px;
+}

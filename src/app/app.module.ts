@@ -17,6 +17,9 @@ import { Business } from '../providers/business/business';
 import { StoreModule } from '@ngrx/store';
 import { rootReducer } from '../store/reducers/reducers';
 import { GetDateProvider } from '../providers/get-date/get-date';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,10 +30,14 @@ import { GetDateProvider } from '../providers/get-date/get-date';
     TabsPage
   ],
   imports: [
+    FormsModule,
     ComponentsModule,
     BrowserModule,
     StoreModule.forRoot({state:rootReducer}),
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(MyApp)
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [

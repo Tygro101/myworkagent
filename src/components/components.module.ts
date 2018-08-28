@@ -6,17 +6,21 @@ import { DayCardComponent } from './day-card/day-card';
 import { SellComponent } from './sell/sell';
 import { MonthCardComponent } from './month-card/month-card';
 import { BrowserModule } from "../../node_modules/@angular/platform-browser";
+import { WorkTimePickerComponent } from './work-time-picker/work-time-picker';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [WorkTimeComponent, SellCounterComponent,
     DayCardComponent,
     SellComponent,
-    MonthCardComponent],
-  imports: [BrowserModule],
+    MonthCardComponent,
+    WorkTimePickerComponent],
+  imports: [BrowserModule, FormsModule],
   exports: [WorkTimeComponent, SellCounterComponent,
     DayCardComponent,
     SellComponent,
-    MonthCardComponent]
+    MonthCardComponent,
+    WorkTimePickerComponent]
 })
 export class ComponentsModule {
 	

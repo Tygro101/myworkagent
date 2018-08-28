@@ -50,6 +50,10 @@ export class WorkTimeComponent implements OnInit {
   private Increment(): void {
     this.time = this.timeHolder.increment();
   }
+
+  public setTime(time:WorkTime): void{
+    this.timeHolder.setTime(time);
+  }
 }
 
 class TimeHolder {
@@ -100,5 +104,12 @@ class TimeHolder {
       minutes: this.minutes,
       seconds: this.seconds
     };
+  }
+
+  public setTime(time:WorkTime){
+    this.hours = time.hours;
+    this.minutes = time.minutes;
+    this.seconds = time.seconds;
+     
   }
 }
